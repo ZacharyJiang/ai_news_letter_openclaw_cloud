@@ -453,9 +453,14 @@ def _fmt_time_minute(dt: datetime) -> str:
 
 
 def _bold(text: str) -> str:
-    # Simple emphasis that works reasonably across channels.
-    # WhatsApp supports *bold*; Feishu treats this as literal asterisks, but it's acceptable.
-    return f"*{text}*" if text else ""
+    # Emphasis across channels:
+    # - WhatsApp supports *bold*
+    # - Feishu supports **bold** (Markdown-like)
+    if not text:
+        return ""
+    if CHANNEL == "feishu":
+        return f"**{text}**"
+    return f"*{text}*"
 
 
 def extract_keywords(item: NewsItem) -> List[str]:
@@ -532,17 +537,17 @@ def format_item_pretty(item: NewsItem, idx: int) -> str:
 
     # A slightly nicer, emoji-led layout for Feishu; still readable in WhatsApp.
     parts = [
-        f"{idx:02d}. 🧭 {_bold(domain)} · ⏱️ {when}",
+        f"{_bold(f'{idx:02d}.')}  🧭 {_bold(domain)} · ⏱️ {_bold(when)}",
         f"📰 {_bold(title)}\n🏷️ {source}",
     ]
     if kw_str:
-        parts.append(f"✨ 关键词: {kw_str}")
+        parts.append(f"✨ {_bold('关键词')}: {kw_str}")
     if INCLUDE_ABSTRACT:
         if INCLUDE_ZH and zh_abs:
-            parts.append(f"📌 {zh_abs}")
+            parts.append(f"📌 {_bold('要点')}: {zh_abs}")
         if INCLUDE_EN and en_abs:
-            parts.append(f"🗒️ {en_abs}")
-    parts.append(f"🔗 {item.url}")
+            parts.append(f"🗒️ {_bold('Notes')}: {en_abs}")
+    parts.append(f"🔗 {_bold('链接')}: {item.url}")
 
     return "\n".join(parts)
 
