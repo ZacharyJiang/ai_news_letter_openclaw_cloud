@@ -12,6 +12,18 @@ set -a
 source .env
 set +a
 
+# Re-apply any caller-provided overrides (so .env can't blank them out)
+OPENCLAW_CHANNEL=${OPENCLAW_CHANNEL_FROM_CALLER:-${OPENCLAW_CHANNEL:-}}
+OPENCLAW_TARGET=${OPENCLAW_TARGET_FROM_CALLER:-${OPENCLAW_TARGET:-}}
+export OPENCLAW_CHANNEL OPENCLAW_TARGET
+
 # Run once for cron/reminder execution.
 export RUN_ONCE_AND_EXIT=1
+
+# Allow cron/reminder to override routing without editing .env.
+# (.env may set OPENCLAW_TARGET empty, which breaks standalone sends.)
+: "${OPENCLAW_CHANNEL:=}"
+: "${OPENCLAW_TARGET:=}"
+export OPENCLAW_CHANNEL OPENCLAW_TARGET
+
 exec ./.venv/bin/python bot.py
