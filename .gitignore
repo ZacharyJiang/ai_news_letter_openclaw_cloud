@@ -1,0 +1,35 @@
+# Secrets
+.env
+*.env
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.envrc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# OpenClaw runtime/state (keep local)
+.openclaw/
+.clawhub/
+
+# Agent workspace notes (keep local by default)
+MEMORY.md
+memory/
+HEARTBEAT.md
+SOUL.md
+USER.md
+IDENTITY.md
+TOOLS.md
+BOOTSTRAP.md
+AGENTS.md
