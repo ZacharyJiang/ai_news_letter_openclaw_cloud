@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A-Share ETF Monitor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <main class="layout">
+      <header class="hero panel appear">
+        <div>
+          <p class="eyebrow">A-SHARE ETF INTEL</p>
+          <h1>场内 ETF 全量监控</h1>
+          <p class="sub">
+            实时行情、费用结构、历史区间位置与 K 线联动分析。面向 24 小时在线访问场景。
+          </p>
+        </div>
+        <div class="hero-meta">
+          <div class="chip">总数: <span id="totalCount">-</span></div>
+          <div class="chip">数据刷新: <span id="lastFetchAt">-</span></div>
+          <div class="chip" id="syncState">同步状态: -</div>
+        </div>
+      </header>
+
+      <section class="panel filters appear delay-1">
+        <div class="filter-grid">
+          <label>
+            <span>关键词</span>
+            <input id="keyword" type="text" placeholder="代码/名称" />
+          </label>
+
+          <label>
+            <span>规模最小(亿)</span>
+            <input id="minScale" type="number" step="0.01" />
+          </label>
+          <label>
+            <span>规模最大(亿)</span>
+            <input id="maxScale" type="number" step="0.01" />
+          </label>
+
+          <label>
+            <span>现价最小</span>
+            <input id="minPrice" type="number" step="0.0001" />
+          </label>
+          <label>
+            <span>现价最大</span>
+            <input id="maxPrice" type="number" step="0.0001" />
+          </label>
+
+          <label>
+            <span>总费率最小(%)</span>
+            <input id="minFee" type="number" step="0.0001" />
+          </label>
+          <label>
+            <span>总费率最大(%)</span>
+            <input id="maxFee" type="number" step="0.0001" />
+          </label>
+
+          <label>
+            <span>幅度最小(%)</span>
+            <input id="minDistance" type="number" step="0.0001" />
+          </label>
+          <label>
+            <span>幅度最大(%)</span>
+            <input id="maxDistance" type="number" step="0.0001" />
+          </label>
+
+          <label>
+            <span>幅度口径</span>
+            <select id="distanceMode">
+              <option value="from_high">离历史最高跌幅%</option>
+              <option value="from_low">离历史最低涨幅%</option>
+            </select>
+          </label>
+
+          <label>
+            <span>排序字段</span>
+            <select id="sortBy">
+              <option value="fund_scale_billion">基金规模</option>
+              <option value="price">现价</option>
+              <option value="total_fee_pct">总费率</option>
+              <option value="drawdown_from_ath_pct">离历史最高跌幅</option>
+              <option value="rebound_from_atl_pct">离历史最低涨幅</option>
+              <option value="code">代码</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="filter-actions">
+          <button id="toggleOrder" class="btn ghost">排序: 降序</button>
+          <button id="applyFilter" class="btn prime">应用筛选</button>
+          <button id="resetFilter" class="btn ghost">重置</button>
+          <label class="switch-wrap">
+            <input id="autoRefresh" type="checkbox" checked />
+            <span>自动刷新(10秒)</span>
+          </label>
+          <button id="manualRefresh" class="btn ghost">立即刷新</button>
+        </div>
+      </section>
+
+      <section class="grid-main appear delay-2">
+        <div class="panel table-panel">
+          <div class="table-head">
+            <h2>ETF 列表</h2>
+            <div class="table-note" id="pageInfo">第 1 页</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>代码</th>
+                  <th>名称</th>
+                  <th>现价</th>
+                  <th>规模(亿)</th>
+                  <th>总费率%</th>
+                  <th>离历史最高跌幅%</th>
+                  <th>离历史最低涨幅%</th>
+                  <th>K线</th>
+                </tr>
+              </thead>
+              <tbody id="etfRows"></tbody>
+            </table>
+          </div>
+          <div class="pager">
+            <button id="prevPage" class="btn ghost">上一页</button>
+            <button id="nextPage" class="btn ghost">下一页</button>
+          </div>
+        </div>
+
+        <aside class="panel chart-panel">
+          <div class="chart-head">
+            <div>
+              <h2 id="chartTitle">选择 ETF 查看历史至今 K 线</h2>
+              <p id="chartSubtitle" class="chart-sub">-</p>
+            </div>
+            <div class="period-switch">
+              <button class="period active" data-period="day">日K</button>
+              <button class="period" data-period="week">周K</button>
+              <button class="period" data-period="month">月K</button>
+            </div>
+          </div>
+          <canvas id="klineCanvas" width="720" height="360"></canvas>
+          <div class="chart-stats" id="chartStats"></div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
