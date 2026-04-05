@@ -1,0 +1,10 @@
+time="2026-04-04T10:00:01+08:00" level=warning msg="/root/.openclaw/workspace_coder/ai-newsletter/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+sent 1 message (625 chars)
+time="2026-04-04T18:00:01+08:00" level=warning msg="/root/.openclaw/workspace_coder/ai-newsletter/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+sent 1 message (2119 chars)
+time="2026-04-05T00:00:08+08:00" level=warning msg="/root/.openclaw/workspace_coder/ai-newsletter/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+sent 1 message (1850 chars)
+time="2026-04-05T06:00:06+08:00" level=warning msg="/root/.openclaw/workspace_coder/ai-newsletter/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+time="2026-04-05T12:00:02+08:00" level=warning msg="/root/.openclaw/workspace_coder/ai-newsletter/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+sent 1 message (643 chars)

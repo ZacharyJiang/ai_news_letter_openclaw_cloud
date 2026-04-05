@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  ai-newsletter:
+    build: .
+    container_name: ai-newsletter
+    restart: unless-stopped
+    environment:
+      - OPENCLAW_BASE_URL=${OPENCLAW_BASE_URL:-http://127.0.0.1:18789}
+      - OPENCLAW_TOKEN=${OPENCLAW_TOKEN}
+      - OPENCLAW_CHANNEL=${OPENCLAW_CHANNEL:-feishu}
+      - OPENCLAW_ACCOUNT_ID=${OPENCLAW_ACCOUNT_ID:-ai_news}
+      - OPENCLAW_TARGET=${OPENCLAW_TARGET:-user:ou_d2eb6bf05c8a287280e365f5f39693e3}
+      - RUN_EVERY_HOURS=${RUN_EVERY_HOURS:-6}
+      - RUN_ON_START=${RUN_ON_START:-1}
+      - PATH=/root/.nvm/versions/node/v22.22.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin
+    env_file:
+      - .env
+    # 挂载宿主机的node和openclaw，让容器能调用openclaw
+    volumes:
+      - /root/.nvm/versions/node/v22.22.0:/root/.nvm/versions/node/v22.22.0
+      - /root/.nvm:/root/.nvm
+      - /root/.local/share/pnpm:/root/.local/share/pnpm
+      - /root/.openclaw:/root/.openclaw
+    # 启动Python定时调度，自动按RUN_EVERY_HOURS推送
+    command: ["python", "bot.py"]
