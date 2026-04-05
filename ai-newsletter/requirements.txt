@@ -1,0 +1,4 @@
+aiohttp
+feedparser
+apscheduler
+beautifulsoup4

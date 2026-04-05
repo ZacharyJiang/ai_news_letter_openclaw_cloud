@@ -1,0 +1,131 @@
+.page {
+  padding: 20rpx;
+}
+
+.panel {
+  margin-bottom: 20rpx;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14rpx;
+}
+
+.controls {
+  justify-content: space-between;
+}
+
+.switch-row {
+  justify-content: space-between;
+  margin-top: 10rpx;
+}
+
+.label {
+  width: 220rpx;
+  color: #475569;
+  font-size: 24rpx;
+}
+
+.input {
+  flex: 1;
+  height: 64rpx;
+  border: 1rpx solid #d9e2ef;
+  border-radius: 12rpx;
+  padding: 0 16rpx;
+  background: #f8fafc;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+}
+
+.field .label {
+  width: auto;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.picker {
+  min-width: 320rpx;
+  padding: 12rpx;
+  border: 1rpx solid #d9e2ef;
+  border-radius: 10rpx;
+  background: #f8fafc;
+  margin-right: 10rpx;
+}
+
+.summary {
+  margin-bottom: 16rpx;
+  color: #334155;
+}
+
+.sync-tip {
+  margin-bottom: 12rpx;
+  color: #1d4ed8;
+}
+
+.error {
+  margin-bottom: 12rpx;
+  color: #d92d20;
+}
+
+.loading {
+  margin-bottom: 12rpx;
+  color: #64748b;
+}
+
+.item {
+  margin-bottom: 16rpx;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.code {
+  color: #64748b;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10rpx;
+}
+
+.grid3 .label {
+  width: auto;
+  display: block;
+  font-size: 22rpx;
+}
+
+.grid3 .value {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.up {
+  color: #d92d20;
+}
+
+.down {
+  color: #0b8f55;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  margin: 24rpx 0 40rpx;
+}

@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/list/index",
+    "pages/detail/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "A股ETF监控",
+    "navigationBarBackgroundColor": "#0f172a",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f8fafc",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
