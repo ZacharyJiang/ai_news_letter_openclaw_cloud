@@ -185,13 +185,15 @@ def clean_text(text: str) -> str:
 # Fetchers
 # -----------------------------
 
-def fetch_rss_source(source: Dict[str, str]) -> List[NewsItem]:
+async def fetch_rss_source(source: Dict[str, str]) -> List[NewsItem]:
     # feedparser.parse can hang if a feed stalls; set a socket timeout.
     import socket
     old_timeout = socket.getdefaulttimeout()
-    socket.setdefaulttimeout(20)
+    socket.setdefaulttimeout(10)  # 缩短超时到10秒
     try:
-        feed = feedparser.parse(source["url"])
+        feed = await asyncio.to_thread(feedparser.parse, source["url"])
+    except Exception:
+        return []
     finally:
         socket.setdefaulttimeout(old_timeout)
 
@@ -240,14 +242,16 @@ def fetch_rss_source(source: Dict[str, str]) -> List[NewsItem]:
     return items
 
 
-def fetch_all_rss() -> List[NewsItem]:
+async def fetch_all_rss() -> List[NewsItem]:
     all_items: List[NewsItem] = []
-    for source in RSS_SOURCES:
-        try:
-            all_items.extend(fetch_rss_source(source))
-        except Exception:
-            # Skip broken feeds; keep the bot running
+    # 并行请求所有RSS源，总超时15秒
+    tasks = [fetch_rss_source(source) for source in RSS_SOURCES]
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+
+    for res in results:
+        if isinstance(res, Exception):
             continue
+        all_items.extend(res)
     return all_items
 
 
@@ -321,7 +325,7 @@ def _window_start_utc() -> datetime:
 
 
 async def fetch_all_items() -> List[NewsItem]:
-    rss_items = await asyncio.to_thread(fetch_all_rss)
+    rss_items = await fetch_all_rss()
     newsapi_items = await fetch_all_newsapi()
     items = rss_items + newsapi_items
 
